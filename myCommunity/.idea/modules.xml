@@ -3,9 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/community.iml" filepath="$PROJECT_DIR$/community.iml" />
+      <module fileurl="file://$PROJECT_DIR$/community-common/community-common.iml" filepath="$PROJECT_DIR$/community-common/community-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/community-upload/community-upload.iml" filepath="$PROJECT_DIR$/community-upload/community-upload.iml" />
       <module fileurl="file://$PROJECT_DIR$/community-web/community-web.iml" filepath="$PROJECT_DIR$/community-web/community-web.iml" />
-      <module fileurl="file://$PROJECT_DIR$/community-common/communitycommon.iml" filepath="$PROJECT_DIR$/community-common/communitycommon.iml" />
     </modules>
   </component>
 </project>

@@ -1,0 +1,115 @@
+server:
+  port: 8888
+ #spring:
+ #  datasource:
+ #   driver-class-name: com.mysql.jdbc.Driver
+ #  url: jdbc:mysql://my_community?serverTimezone=GMT%2B8
+ #  username: root
+ # password: 123
+spring:
+  #系统缓存
+  cache:
+    type: redis
+  #Druid连接池
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    druid:
+      url: jdbc:mysql://${jdbc.host}/${jdbc.database}?characterEncoding=utf8&allowMultiQueries=true
+      username: ${jdbc.user}
+      password: ${jdbc.pass}
+      # 初始化大小，最小，最大
+      initialSize: 5
+      minIdle: 5
+      maxActive: 1000
+      # 配置获取连接等待超时的时间(毫秒)
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 100000
+      # 配置有一个连接在连接池中的最小生存时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+
+      validationQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      # 打开PSCache，指定每个连接上PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      # 配置监控统计拦截的filters，去掉后监控界面sql将无法统计，'wall'用于防火墙
+      filters: stat,wall,slf4j
+      # 通过connectProperties属性来打开mergeSql功能，慢SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  #redis缓存
+  redis:
+    database: 0
+    # Redis服务器地址
+    host: ${redis.host}
+    # Redis服务器连接端口
+    port: ${redis.port}
+    # Redis服务器连接密码（默认为空）
+    password: ${redis.pass}
+    # 连接超时时间
+    timeout: 10s
+    jedis:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 8
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: 3s
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池中的最小空闲连接
+        min-idle: 0
+  session:
+    #选择使用redis 作为session存储
+    store-type: redis
+  #quartz调度器（定时）
+  quartz:
+    #数据库方式
+    job-store-type: jdbc
+    #相关定时属性配置
+    properties:
+      org:
+        quartz:
+          scheduler:
+            #调度标识名 集群中每一个实例都必须使用相同的名称
+            instanceName: inxedu
+            #ID设置为自动获取 每一个必须不同
+            instanceId: AUTO
+          threadPool:
+            #ThreadPool 实现的类名
+            class: org.quartz.simpl.SimpleThreadPool
+            #线程数量
+            threadCount: 10
+            #线程优先级
+            threadPriority: 5
+            #自创建父线程
+            threadsInheritContextClassLoaderOfInitializingThread: true
+          jobStore:
+            #数据保存方式为持久化
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            #容许的最大作业延长时间
+            misfireThreshold: 60000
+            #数据库平台  我这里的是mysql，所以是org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            #表的前缀
+            tablePrefix: qrtz_
+            maxMisfiresToHandleAtATime: 10
+            #加入集群
+            isClustered: true
+            #调度实例失效的检查时间间隔
+            clusterCheckinInterval: 20000
+            #设置为TRUE不会出现序列化非字符串类到 BLOB 时产生的类版本问题
+            useProperties: false
+  mvc:
+    favicon:
+      #关闭默认favicon.ico
+      enabled:
+    #jsp配置false
+    view:
+      prefix: /
+      suffix: .html
+  thymeleaf:
+    cache: false
+    enabled: false
