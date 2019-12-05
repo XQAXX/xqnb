@@ -6,12 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="community" />
+        <module name="community-upload" />
         <module name="community-web" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="community" target="1.8" />
+      <module name="community-upload" target="1.8" />
       <module name="community-web" target="1.8" />
     </bytecodeTargetLevel>
   </component>
