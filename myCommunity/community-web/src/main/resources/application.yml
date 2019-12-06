@@ -62,6 +62,14 @@ spring:
   session:
     #选择使用redis 作为session存储
     store-type: none
+
+  application:
+    name: spirng-boot-mongodb
+  data:
+    mongodb:
+      host: localhost   #同127.0.0.1
+      port: 27017
+      database: qiao    #指定操作的数据库
   mvc:
     favicon:
       #关闭默认favicon.ico
