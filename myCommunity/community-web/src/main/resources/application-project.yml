@@ -1,0 +1,48 @@
+prefix: inxedu_web_boot_2019061411
+jdbc:
+  host: 39.106.24.142:3306
+  database: my_community
+  user: root
+  pass: 123456
+redis:
+  host: 39.106.24.142
+  port: 6379
+  pass: xiaoqiao
+ #openOffice 配置
+project:
+  #日期格式
+  date-format: yyyy-MM-dd
+  time-format: HH:mm:ss
+  file:
+    #文件上传目录
+    root: F:\沈老师\git下载\shcpe-training\inxedu-web\src\main\webapp
+    #允许上传类型
+    image:
+      type: jpg,png,jpeg,odt,JPG,PNG,JPEG,ODT
+  #项目名称
+  projectName: inxedu
+  #Cookie域
+  mydomain:
+  #项目访问地址
+  contextPath: http://127.0.0.1
+  #Tomcat启动端口
+  prot: 80
+  #上线时此属性必须为 false，否则影响访问速度
+  development: true
+  #升级系统访问地址
+  updateContextPath: http://127.0.0.1:8089
+  #该用户的唯一标识 用于自动升级
+  token: 234fb637-e5df-4ae6-a31f-3c40211a8ce4
+spring:
+  servlet:
+    multipart:
+      #单文件上传最大大小，默认100Mb
+      max-request-size: 100MB
+      #多文件上传时最大大小,默认1000Mb
+      max-file-size: 1000MB
+#这些配置是为了支持https
+server:
+  use-forward-headers: true
+  tomcat:
+    protocol-header: x-forwarded-proto
+    port-header: X-Forwarded-Port
