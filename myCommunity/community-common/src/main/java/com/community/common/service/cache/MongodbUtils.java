@@ -1,4 +1,4 @@
-package com.community.common.util;
+package com.community.common.service.cache;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
