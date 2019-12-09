@@ -2,8 +2,7 @@ package com.community.test;
 
 import com.community.common.Qiao;
 import com.community.common.service.cache.RedisUtil;
-import com.community.common.util.MongodbUtils;
-import com.community.common.util.PropertyUtil;
+import com.community.common.service.cache.MongodbUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -15,8 +14,6 @@ public class TestController {
     RedisUtil redisUtil;
     @RequestMapping("/login1")
     public String test(){
-        PropertyUtil instance = PropertyUtil.getInstance("application-project");
-        String jdbc = instance.getProperty("jdbc");
         Qiao qiao=new Qiao();
         qiao.setName("乔宏展");
         qiao.setAge(22);
