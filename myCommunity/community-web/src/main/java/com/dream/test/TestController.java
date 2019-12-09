@@ -14,10 +14,10 @@ public class TestController {
     RedisUtil redisUtil;
     @RequestMapping("/login1")
     public String test(){
-        Qiao qiao=new Qiao();
+  /*      Qiao qiao=new Qiao();
         qiao.setName("乔宏展");
         qiao.setAge(22);
-        MongodbUtils.save(qiao);
+        MongodbUtils.save(qiao);*/
         //redisUtil.set("ttt","sssss");
         System.out.println("123");
         return "login";

@@ -62,27 +62,6 @@ public class ImageUploadController {
             mReq = (MultipartHttpServletRequest) request;
             // 从config.json中取得上传文件的ID
             multipartFile = mReq.getFile("upfile");
-            // 取得文件的原始文件名称
-            fileName = multipartFile.getOriginalFilename();
-
-			/*originalFileName = fileName;
-
-			if(!StringUtils.isEmpty(fileName)){
-				is = file.getInputStream();
-				fileName = FileUtils.reName(fileName);
-				filePath = FileUtils.saveFile(fileName, is, fileuploadPath);
-			} else {
-				throw new IOException("文件名为空!");
-			}*/
-
-
-            //最大文件大小
-			/*long maxSize = 4096000;
-			logger.info(file.getSize());
-			//检查文件大小
-			if(file.getSize() > maxSize){
-				return responseErrorData(response,1,"上传的图片大小不能超过4M。");
-			}*/
             //获取上传文件类型的扩展名,先得到.的位置，再截取从.的下一个位置到文件的最后，最后得到扩展名
             String ext = FileUploadUtils.getSuffix(multipartFile.getOriginalFilename());
             if (!checkFileExt(ext)) {
