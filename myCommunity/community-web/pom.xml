@@ -7,7 +7,7 @@
         <groupId>com.dream</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>com.community</groupId>
+    <groupId>com.dream</groupId>
     <artifactId>community-web</artifactId>
 
 <!--
@@ -17,10 +17,10 @@
         <version>2.2.1.RELEASE</version>
         <relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;
     </parent>
-    <groupId>com.community</groupId>
-    <artifactId>community-web</artifactId>
+    <groupId>com.dreamoupId>
+    <artifactId>dream-web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>community-web</name>
+    <name>dream-web</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -30,8 +30,13 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.community</groupId>
+            <groupId>com.dream</groupId>
             <artifactId>community-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dream</groupId>
+            <artifactId>community-upload</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

@@ -1,7 +1,6 @@
-package com.community.upload.controller;
-import com.community.common.util.PropertyUtil;
-import com.community.upload.util.FileUploadUtils;
-import com.community.upload.util.UploadPropertyUtil;
+package com.dream.upload.controller;
+import com.dream.upload.util.FileUploadUtils;
+import com.dream.upload.util.UploadPropertyUtil;
 import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
-import static com.community.upload.util.FileUploadUtils.checkFileExt;
+import static com.dream.upload.util.FileUploadUtils.checkFileExt;
 
 /**
  * 图片上传

@@ -1,4 +1,4 @@
-package com.community.entity;
+package com.dream.entity;
 
 import lombok.Data;
 

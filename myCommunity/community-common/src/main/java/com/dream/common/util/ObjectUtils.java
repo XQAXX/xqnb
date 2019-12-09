@@ -1,4 +1,4 @@
-package com.community.common.util;
+package com.dream.common.util;
 
 import cn.hutool.core.util.ObjectUtil;
 

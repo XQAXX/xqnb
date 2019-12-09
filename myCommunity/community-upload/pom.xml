@@ -6,6 +6,7 @@
         <artifactId>demo</artifactId>
         <groupId>com.dream</groupId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -18,7 +19,7 @@
 
   <dependencies>
       <dependency>
-          <groupId>com.community</groupId>
+          <groupId>com.dream</groupId>
           <artifactId>community-common</artifactId>
           <version>0.0.1-SNAPSHOT</version>
       </dependency>

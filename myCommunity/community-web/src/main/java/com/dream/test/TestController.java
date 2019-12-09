@@ -1,8 +1,8 @@
-package com.community.test;
+package com.dream.test;
 
-import com.community.common.Qiao;
-import com.community.common.service.cache.RedisUtil;
-import com.community.common.service.cache.MongodbUtils;
+import com.dream.common.Qiao;
+import com.dream.common.service.cache.RedisUtil;
+import com.dream.common.service.cache.MongodbUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 

@@ -1,4 +1,4 @@
-package com.community.config;
+package com.dream.config;
 
 
 import org.springframework.context.annotation.Configuration;

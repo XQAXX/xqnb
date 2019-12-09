@@ -1,4 +1,4 @@
-package com.community.communityweb;
+package com.dream.communityweb;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

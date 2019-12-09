@@ -1,4 +1,4 @@
-package com.community.upload.util;
+package com.dream.common.util;
 
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.core.io.ClassPathResource;
@@ -11,21 +11,24 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class UploadPropertyUtil {
-	private static Map<String, UploadPropertyUtil> instance = Collections.synchronizedMap(new HashMap<String, UploadPropertyUtil>());
+/**
+ * 获取配置文件的工具类
+ */
+public class PropertyUtil {
+	private static Map<String, PropertyUtil> instance = Collections.synchronizedMap(new HashMap<String, PropertyUtil>());
 	protected String sourceUrl;
 	protected Properties properties;
 
-	protected UploadPropertyUtil(String sourceUrl) {
+	protected PropertyUtil(String sourceUrl) {
 		this.sourceUrl = sourceUrl;
 		load();
 	}
 
-	public static UploadPropertyUtil getInstance(String sourceUrl) {
-		synchronized (UploadPropertyUtil.class) {
-			UploadPropertyUtil manager = instance.get(sourceUrl);
+	public static PropertyUtil getInstance(String sourceUrl) {
+		synchronized (PropertyUtil.class) {
+			PropertyUtil manager = instance.get(sourceUrl);
 			if (manager == null) {
-				manager = new UploadPropertyUtil(sourceUrl);
+				manager = new PropertyUtil(sourceUrl);
 				instance.put(sourceUrl, manager);
 			}
 			return manager;

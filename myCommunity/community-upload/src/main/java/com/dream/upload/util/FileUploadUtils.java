@@ -1,4 +1,4 @@
-package com.community.upload.util;
+package com.dream.upload.util;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

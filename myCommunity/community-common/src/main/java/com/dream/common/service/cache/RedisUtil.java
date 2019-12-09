@@ -1,6 +1,6 @@
-package com.community.common.service.cache;
+package com.dream.common.service.cache;
 
-import com.community.common.util.ObjectUtils;
+import com.dream.common.util.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;

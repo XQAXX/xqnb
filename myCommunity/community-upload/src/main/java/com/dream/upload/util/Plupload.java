@@ -1,4 +1,4 @@
-package com.community.upload.util;
+package com.dream.upload.util;
 
 import org.springframework.web.multipart.MultipartFile;
 

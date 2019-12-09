@@ -1,4 +1,4 @@
-package com.community.common;
+package com.dream.common;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.community.common.service.cache;
+package com.dream.common.service.cache;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
