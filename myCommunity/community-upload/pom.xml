@@ -12,4 +12,116 @@
     <artifactId>community-upload</artifactId>
 
 
+    <properties>
+        <libPackagePath>${basedir}/../community-web/src/main/resources/lib</libPackagePath>
+    </properties>
+
+  <dependencies>
+      <dependency>
+          <groupId>com.community</groupId>
+          <artifactId>community-common</artifactId>
+          <version>0.0.1-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-web</artifactId>
+      </dependency>
+      <!--监控系统健康情况-->
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-actuator</artifactId>
+      </dependency>
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-test</artifactId>
+      </dependency>
+      <!--spring boot 配置处理器 -->
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-configuration-processor</artifactId>
+      </dependency>
+      <!--日志-->
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-logging</artifactId>
+      </dependency>
+      <!--jackson-->
+      <dependency>
+          <groupId>com.fasterxml.jackson.datatype</groupId>
+          <artifactId>jackson-datatype-jsr310</artifactId>
+      </dependency>
+      <!--解决Xml消息转换器-->
+      <dependency>
+          <groupId>com.fasterxml.jackson.dataformat</groupId>
+          <artifactId>jackson-dataformat-xml</artifactId>
+      </dependency>
+      <!--Hutool工具包-->
+      <dependency>
+          <groupId>cn.hutool</groupId>
+          <artifactId>hutool-all</artifactId>
+          <version>4.4.5</version>
+      </dependency>
+      <!-- httpclient -->
+      <dependency>
+          <groupId>commons-httpclient</groupId>
+          <artifactId>commons-httpclient</artifactId>
+          <version>3.1</version>
+      </dependency>
+      <dependency>
+          <groupId>commons-codec</groupId>
+          <artifactId>commons-codec</artifactId>
+          <version>1.9</version>
+      </dependency>
+      <!-- httpclient -->
+
+
+      <dependency>
+          <groupId>com.inxedu.wxos</groupId>
+          <artifactId>inxedu-common</artifactId>
+          <version>3.0.0.Release</version>
+      </dependency>
+
+
+      <!-- office转pdf -->
+      <dependency>
+          <groupId>com.artofsolving</groupId>
+          <artifactId>jodconverter</artifactId>
+          <version>2.2.2</version>
+          <scope>system</scope>
+          <systemPath>${libPackagePath}/jodconverter.jar</systemPath>
+      </dependency>
+      <dependency>
+          <groupId>juh</groupId>
+          <artifactId>juh</artifactId>
+          <version>3.0.1</version>
+          <scope>system</scope>
+          <systemPath>${libPackagePath}/juh.jar</systemPath>
+      </dependency>
+      <dependency>
+          <groupId>jurt</groupId>
+          <artifactId>jurt</artifactId>
+          <version>3.0.1</version>
+          <scope>system</scope>
+          <systemPath>${libPackagePath}/jurt.jar</systemPath>
+      </dependency>
+      <dependency>
+          <groupId>ridl</groupId>
+          <artifactId>ridl</artifactId>
+          <version>3.0.1</version>
+          <scope>system</scope>
+          <systemPath>${libPackagePath}/ridl.jar</systemPath>
+      </dependency>
+      <dependency>
+          <groupId>unoloader</groupId>
+          <artifactId>unoloader</artifactId>
+          <version>3.0.1</version>
+          <scope>system</scope>
+          <systemPath>${libPackagePath}/unoloader.jar</systemPath>
+      </dependency>
+  </dependencies>
+
 </project>

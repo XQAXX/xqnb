@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.inxedu.wxos:inxedu-common:3.0.0.Release">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/inxedu/wxos/inxedu-common/3.0.0.Release/inxedu-common-3.0.0.Release.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/inxedu/wxos/inxedu-common/3.0.0.Release/inxedu-common-3.0.0.Release-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/inxedu/wxos/inxedu-common/3.0.0.Release/inxedu-common-3.0.0.Release-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
