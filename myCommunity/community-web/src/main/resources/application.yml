@@ -1,5 +1,5 @@
 server:
-  port: 8888
+  port: 80
 spring:
 #配置文件列表
   profiles:
@@ -67,17 +67,18 @@ spring:
     name: spirng-boot-mongodb
   data:
     mongodb:
-      host: localhost   #同127.0.0.1
-      port: 27017
-      database: qiao    #指定操作的数据库
+      host: ${mongodb.host}   #同127.0.0.1
+      port: ${mongodb.port}
+      database: ${mongodb.database}    #指定操作的数据库
   mvc:
     favicon:
       #关闭默认favicon.ico
       enabled:
-    #jsp配置false
     view:
-      prefix: /
       suffix: .html
+    static-path-pattern: /**
   thymeleaf:
     cache: false
     enabled: false
+  resources:
+    static-locations: classpath:/templates/,classpath:/static/

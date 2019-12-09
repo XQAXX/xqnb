@@ -8,6 +8,10 @@ redis:
   host: 39.106.24.142
   port: 6379
   pass: xiaoqiao
+mongodb:
+  host: localhost   #同127.0.0.1
+  port: 27017
+  database: qiao    #指定操作的数据库
  #openOffice 配置
 project:
   #日期格式

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    body{
+        background: #00a0e9;
+    }
+    h3{
+        text-align: center;
+    }
+    table{
+        margin-left: auto;
+        margin-right: auto;
+    }
+    td,tr{
+        text-align: center;
+    }
+</style>
+<script src="/ueditor/ueditor.config.js"></script>
+<script src="/ueditor/ueditor.all.js"></script>
+<!--<script src="/ueditor/lang/zh-cn/zh-cn.js"></script>-->
+<!--<script src="/qiao/jquery-1.8.3.js"></script>-->
+<!--<script src="/qiao/jquery-1.7.2.min.js"></script>-->
+<body>
+<!--
+
+<table style="display: none">
+    &lt;!&ndash;<h3>登录</h3>&ndash;&gt;
+    <form action="/hai" method="post">
+        <tr>
+        <td>账号:<input type="text" name="uname" ></td>
+    </tr>
+        <tr>
+            <td >密码:<input type="password" name="upwd"></td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="登录">&nbsp;&nbsp;&nbsp;<input type="reset" value="重置"></td>
+        </tr>
+    </form>
+
+</table>
+-->
+<!--<div style="width: 55%">
+    <textarea name="articleContent.content" class="" id="content"></textarea>
+</div>-->
+<script id="editor" type="text/plain" name="gdesc" style="width:100%;height:350px;"></script>
+<script>
+
+      //实例化编辑器
+     var ue = UE.getEditor('editor', {});
+     /* $('<div/>', {
+          id: 'city',
+      }).css({
+          width: '400px',
+          height: '400px',
+          top: '0px',
+          right: '0px',
+          left: '0px',
+          bottom: '0px',
+          margin: 'auto',
+          background: 'cornflowerblue',
+          border: '10px solid gray',
+          transform: 'rotateX(115deg)rotateZ(135deg) ',
+          display: 'block',
+          transformStyle: 'preserve-3d',
+          animationName: 'x-spin',
+          animationDuration: '20s',
+          animationIterationCount: 'infinite',
+          animationTimingFunction: 'linear',
+      }).appendTo('body');*/
+
+/*      setTimeout(function () {
+            alert("123")
+        },1000);
+
+      $("#qiao").click(function () {
+          alert("sssssss")
+      })*/
+</script>
+</body>
+</html>
