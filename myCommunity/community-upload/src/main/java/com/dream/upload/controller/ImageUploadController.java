@@ -98,6 +98,12 @@ public class ImageUploadController {
         }
         return result;
     }
+
+    @RequestMapping("/config")
+    public String config(String action, HttpServletRequest request, HttpServletResponse response) {
+        return "redirect:/static/ueditor/jsp/config.json";
+    }
+
     /**
      * 获取参数cutImg 判断是否切图
      *

@@ -76,9 +76,8 @@ spring:
       enabled:
     view:
       suffix: .html
-    static-path-pattern: /**
-  thymeleaf:
-    cache: false
-    enabled: false
+      prefix: /
+    #静态资源配置
+    static-path-pattern: /static/**
   resources:
     static-locations: classpath:/templates/,classpath:/static/

@@ -77,15 +77,6 @@
           <artifactId>commons-codec</artifactId>
           <version>1.9</version>
       </dependency>
-      <!-- httpclient -->
-
-
-      <dependency>
-          <groupId>com.inxedu.wxos</groupId>
-          <artifactId>inxedu-common</artifactId>
-          <version>3.0.0.Release</version>
-      </dependency>
-
 
       <!-- office转pdf -->
       <dependency>
