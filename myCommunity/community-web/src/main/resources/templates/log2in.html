@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <title>Title</title>
 </head>
 <style>
@@ -21,6 +22,7 @@
 </style>
 <script src="/static/ueditor/ueditor.config.js"></script>
 <script src="/static/ueditor/ueditor.all.js"></script>
+<script src="/static/ueditor/ueditor.parse.js"></script>
 <!--<script src="/ueditor/lang/zh-cn/zh-cn.js"></script>-->
 <!--<script src="/qiao/jquery-1.8.3.js"></script>-->
 <!--<script src="/qiao/jquery-1.7.2.min.js"></script>-->
@@ -50,7 +52,17 @@
 <script>
 
       //实例化编辑器
-     var ue = UE.getEditor('editor', {});
+var ue = UE.getEditor('editor', {});
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+UE.Editor.prototype.getActionUrl = function(action) {
+    console.log(action)
+    if (action == 'image/ueditorupload' || action == 'uploadscrawl' || action == 'listimage' || action == 'uploadimage') {
+        return 'image/ueditorupload';
+    } else {
+        return this._bkGetActionUrl.call(this, action);
+    }
+}
+
      /* $('<div/>', {
           id: 'city',
       }).css({

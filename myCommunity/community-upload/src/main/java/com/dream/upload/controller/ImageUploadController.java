@@ -1,4 +1,5 @@
 package com.dream.upload.controller;
+import com.baidu.ueditor.ActionEnter;
 import com.dream.upload.util.FileUploadUtils;
 import com.dream.upload.util.UploadPropertyUtil;
 import org.apache.ibatis.annotations.Param;
@@ -6,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ClassUtils;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,12 +19,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.InputStream;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static com.dream.upload.util.FileUploadUtils.checkFileExt;
@@ -40,6 +43,13 @@ public class ImageUploadController {
 
     public static UploadPropertyUtil propertyUtil = UploadPropertyUtil.getInstance("application-project");
 
+    @RequestMapping("/uploadimage")
+    @ResponseBody
+    public Object uploadimage (){
+        //获取上传文件路径
+        String uoloadPath = getProjectRootDirPath()+"/";
+        return 1;
+    }
     /**
      * ueditor上传图片
      *
@@ -103,6 +113,7 @@ public class ImageUploadController {
     public String config(String action, HttpServletRequest request, HttpServletResponse response) {
         return "redirect:/static/ueditor/jsp/config.json";
     }
+
 
     /**
      * 获取参数cutImg 判断是否切图
@@ -229,6 +240,43 @@ public class ImageUploadController {
             sb.append(baseString.charAt(number));
         }
         return sb.toString();
+    }
+
+    @RequestMapping("/upload.do")
+    @ResponseBody
+    public Map<String, Object> images (MultipartFile upfile, HttpServletRequest request, HttpServletResponse response){
+        Map<String, Object> params = new HashMap<String, Object>();
+        System.out.println("1111111111111");
+        try{
+            String basePath = "e:/img";  //与properties文件中lyz.uploading.url相同，未读取到文件数据时为basePath赋默认值
+            String ext = "abc" + upfile.getOriginalFilename();
+            String fileName = String.valueOf(System.currentTimeMillis()).concat("_").concat(""+new Random().nextInt(6)).concat(".").concat(ext);
+            StringBuilder sb = new StringBuilder();
+            //拼接保存路径
+            sb.append(basePath).append("/").append(fileName);
+            //写到e盘
+            File f = new File(sb.toString());
+            if(!f.exists()){
+                f.getParentFile().mkdirs();
+            }
+            OutputStream out = new FileOutputStream(f);
+            FileCopyUtils.copy(upfile.getInputStream(), out);
+
+
+
+            f = new File("D:\\公司开发文件夹\\" + fileName);
+            out = new FileOutputStream(f);
+            FileCopyUtils.copy(upfile.getInputStream(), out);
+
+            params.put("state", "SUCCESS");
+            params.put("size", upfile.getSize());
+            params.put("original", fileName);
+            params.put("type", upfile.getContentType());
+        } catch (Exception e){
+            e.printStackTrace();
+            params.put("state", "ERROR");
+        }
+        return params;
     }
 
 }

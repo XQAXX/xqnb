@@ -28,9 +28,8 @@ public class LocalWebConfig implements WebMvcConfigurer {
 
         registry.addResourceHandler("/**")
                 .addResourceLocations("file:"+fileRoot)
-                .addResourceLocations("classpath:/META-INF/resources/");
 //                 .addResourceLocations("classpath:/resources/")
-//                 .addResourceLocations("classpath:/static/")
+                   .addResourceLocations("classpath:/static/");
 //                 .addResourceLocations("classpath:/public/")
     }
 }

@@ -1,0 +1,18 @@
+<component name="libraryTable">
+  <library name="alipay-sdk-java20170511115337">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/community-web/src/main/resources/lib/alipay-sdk-java20170511115337.jar!/" />
+      <root url="jar://$PROJECT_DIR$/community-web/src/main/resources/lib/itextpdf-5.5.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/community-web/src/main/resources/lib/jodconverter.jar!/" />
+      <root url="jar://$PROJECT_DIR$/community-web/src/main/resources/lib/juh.jar!/" />
+      <root url="jar://$PROJECT_DIR$/community-web/src/main/resources/lib/jurt.jar!/" />
+      <root url="jar://$PROJECT_DIR$/community-web/src/main/resources/lib/QRCode.jar!/" />
+      <root url="jar://$PROJECT_DIR$/community-web/src/main/resources/lib/ridl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/community-web/src/main/resources/lib/ueditor-1.1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/community-web/src/main/resources/lib/unoloader.jar!/" />
+      <root url="jar://$PROJECT_DIR$/community-web/src/main/resources/lib/yop-java-sdk-2.3.3-jdk17.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
