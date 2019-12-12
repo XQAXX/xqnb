@@ -19,12 +19,12 @@ project:
   time-format: HH:mm:ss
   file:
     #文件上传目录
-    root: D:\社区项目\xqnb\myCommunity\community-web\src\main\resources\static\upload
+    root: D:\社区项目\xqnb\myCommunity\community-web\src\main\resources\static\
     #允许上传类型
     image:
       type: jpg,png,jpeg,odt,JPG,PNG,JPEG,ODT
   #项目名称
-  projectName: inxedu
+  projectName: qiao
   #Cookie域
   mydomain:
   #项目访问地址

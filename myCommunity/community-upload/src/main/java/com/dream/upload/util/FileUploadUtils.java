@@ -1,35 +1,23 @@
 package com.dream.upload.util;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import java.awt.*;
 import java.awt.color.ColorSpace;
 import java.awt.image.*;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
-
+import java.util.concurrent.ThreadLocalRandom;
 public class FileUploadUtils {
 
 	public static UploadPropertyUtil propertyUtil = UploadPropertyUtil.getInstance("application-project");
 
 	private static String imageType = propertyUtil.getProperty("project.file.image.type");
-
-	public static void main(String[] args) {
-		//放大缩小图片
-		scaler("F:/image/4.png","F:/image/ex/12.png",70,false);//true放大  false缩小
-		/*//裁剪图片
-		cut("e:/1.jpg","e:/3.jpg",100,100,500,500);
-		//格式转换
-		convert("e:/1.jpg", "gif", "e:/4.jpg");
-		//转换成黑白图片
-		gray("e:/1.jpg","e:/5.jpg");
-		//添加水印文字
-		pressText("我是水印文字","e:/1.jpg","e:/6.jpg","宋体",Font.BOLD,Color.white,50, 100, 100, 0.5f);
-		//添加水印图片
-		pressImage("e:/添加水印.jpg", "e:/1.jpg","e:/7.jpg", 0, 0, 0.5f);*/
-		
-		//logger.info(getSuffix("asdfsdf.jsp"));;
-	}
+	private static String image []={"png", "jpg", "jpeg", "gif", "bmp"};
+	private static String video []={"flv", "swf", "mkv", "avi", "rm", "rmvb", "mpeg", "mpg"};
 	/**
 	 * 图片放大缩小
 	 * @param oldPath 源图片路径
@@ -124,8 +112,10 @@ public class FileUploadUtils {
 			ImageFilter cropFilter;
 			// 读取源图像
 			BufferedImage bi = ImageIO.read(new File(oldPath));
-			int srcWidth = bi.getWidth();      // 源图宽度
-			int srcHeight = bi.getHeight();    // 源图高度
+			// 源图宽度
+			int srcWidth = bi.getWidth();
+			// 源图高度
+			int srcHeight = bi.getHeight();
 
 			//若原图大小大于切片大小，则进行切割
 			if (srcWidth >= width && srcHeight >= height) {
@@ -140,7 +130,8 @@ public class FileUploadUtils {
 				img = Toolkit.getDefaultToolkit().createImage(new FilteredImageSource(image.getSource(), cropFilter));
 				BufferedImage tag = new BufferedImage(w1, h1,BufferedImage.TYPE_INT_RGB);
 				Graphics g = tag.getGraphics();
-				g.drawImage(img, 0, 0, null); // 绘制缩小后的图
+				// 绘制缩小后的图
+				g.drawImage(img, 0, 0, null);
 				g.dispose();
 				File file =  new File(newPath);
 				if(!file.getParentFile().exists()){
@@ -179,7 +170,8 @@ public class FileUploadUtils {
 	            // 在指定坐标绘制水印文字
 	            g.drawString(pressText, (int)(width*0.5),(int)(height*0.98));
 	            g.dispose();
-	            ImageIO.write(image, getSuffix(newPath), new File(newPath));// 输出到文件流
+				// 输出到文件流
+	            ImageIO.write(image, getSuffix(newPath), new File(newPath));
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
@@ -256,24 +248,121 @@ public class FileUploadUtils {
 	public static String getSuffix(String str){
 		return str = str.substring(str.lastIndexOf(".")+1);
 	}
+	/**
+	 * 获取参数cutImg 判断是否切图
+	 * @param  filePath
+	 * @param  request
+	 * @throws Exception
+	 */
+	public static void zoomImageUtil(String filePath, HttpServletRequest request) throws Exception {
+		/*获取参数cutImg 判断是否切图*/
+		String cutImg = request.getParameter("cutImg");
+		if ("true".equals(cutImg)) {
+			/*获取传过来的图片宽高*/
+			String width = request.getParameter("width");
+			String height = request.getParameter("height");
+			/*如果图片尺寸不为空调用图片拉伸方法*/
+			if ((null != width && width.trim().length() != 0) && (null != height && height.trim().length() != 0) && !"undefined".equals(width) && !"undefined".equals(height)) {
+				zoomImage(filePath, Integer.parseInt(width), Integer.parseInt(height));
+			}
+		}
+	}
+	/**
+	 * 图片缩放,w，h为缩放的目标宽度和高度
+	 * src为源文件目录
+	 */
+	public static void zoomImage(String src, int newWidth, int newHeight) throws Exception {
+		if (newWidth == 0 || newHeight == 0 || src == null || src.trim().length() == 0) {
+			return;
+		}
+		String dest = getProjectRootDirPath();
+		BufferedImage result = null;
+		try {
+			File f2 = new File(dest + src);
+			BufferedImage bi2 = ImageIO.read(f2);
+			int originalh = bi2.getHeight();
+			int originalw = bi2.getWidth();
+			if (originalh != newHeight || originalw != newWidth) {
+				BufferedImage to = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+				Graphics2D g2d = to.createGraphics();
+				to = g2d.getDeviceConfiguration().createCompatibleImage(newWidth, newHeight,
+						Transparency.TRANSLUCENT);
+				g2d.dispose();
+				g2d = to.createGraphics();
+				Image from = bi2.getScaledInstance(newWidth, newHeight, bi2.SCALE_AREA_AVERAGING);
+				g2d.drawImage(from, 0, 0, null);
+				g2d.dispose();
+				ImageIO.write(to, "png", new File(dest + src));
+			}
+		} catch (Exception e) {
+			//logger.info("创建缩略图发生异常" + e.getMessage());
+		}
+	}
 
 	/**
-	 *
-	 * 检查是否是符合的后缀名
-	 *
-	 * @param fileExt 后缀名
-	 * @return
+	 * 获得项目根目录
 	 */
-	public static boolean checkFileExt(String fileExt) {
-		// 定义允许上传的文件扩展名
-		HashMap<String, String> extMap = new HashMap<String, String>();
-		extMap.put("image", imageType);
-        /*
-         * 现在只有图片 extMap.put("flash", "swf,flv"); extMap.put("media",
-         * "swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb");
-         * extMap.put("file",
-         * "doc,docx,xls,xlsx,ppt,htm,html,txt,zip,rar,gz,bz2");
-         */
-		return Arrays.asList(extMap.get("image").toLowerCase().split(",")).contains(fileExt);
+	public static String getProjectRootDirPath() {
+		return propertyUtil.getProperty("project.file.root");
+	}
+
+	/**
+	 * 获取文件保存的路径
+	 * @param request
+	 * @param ext     文件后缀
+	 * @param param   传入参数
+	 * @return 返回文件路径
+	 */
+	public synchronized static String getPath(HttpServletRequest request, String ext, String param) {
+		String filePath = "/upload/"+ext+"/";
+		if (param != null && param.trim().length() > 0) {
+			filePath += param;
+		} else {
+			filePath += propertyUtil.getProperty("project.projectName");
+		}
+		filePath += "/" + toString(new Date(), "yyyyMMdd") + "/" + System.currentTimeMillis() + randomString(6) + "." + ext;
+		return filePath;
+	}
+
+	public static String toString(Date date, String pattern) {
+		if (date == null) {
+			return "";
+		} else {
+			if (pattern == null) {
+				pattern = "yyyy-MM-dd";
+			}
+
+			String dateString = "";
+			SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+
+			try {
+				dateString = sdf.format(date);
+			} catch (Exception var5) {
+				var5.printStackTrace();
+			}
+
+			return dateString;
+		}
+	}
+
+	/**
+	 * 获得一个随机的字符串
+	 *
+	 * @param length 字符串的长度
+	 * @return 随机字符串
+	 */
+	public static String randomString(int length) {
+		String baseString = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		final StringBuilder sb = new StringBuilder();
+
+		if (length < 1) {
+			length = 1;
+		}
+		int baseLength = baseString.length();
+		for (int i = 0; i < length; i++) {
+			int number = ThreadLocalRandom.current().nextInt(baseLength);
+			sb.append(baseString.charAt(number));
+		}
+		return sb.toString();
 	}
 }

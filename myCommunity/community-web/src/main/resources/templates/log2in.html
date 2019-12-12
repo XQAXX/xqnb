@@ -56,9 +56,11 @@ var ue = UE.getEditor('editor', {});
 UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
 UE.Editor.prototype.getActionUrl = function(action) {
     console.log(action)
-    if (action == 'image/ueditorupload' || action == 'uploadscrawl' || action == 'listimage' || action == 'uploadimage') {
-        return 'image/ueditorupload';
-    } else {
+    if (action == 'file/ueditorupload' || action == 'uploadscrawl' || action == 'listimage' || action == 'uploadvideo') {
+        return 'http://127.0.0.1/file/ueditorupload';
+    } else if (action == 'listimage') {
+        return 'http://127.0.0.1/file/listimage';
+    }  else {
         return this._bkGetActionUrl.call(this, action);
     }
 }

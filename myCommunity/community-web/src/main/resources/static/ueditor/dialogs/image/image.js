@@ -361,7 +361,6 @@
                 $('#filePickerReady').after($('<div>').html(lang.errorLoadConfig)).hide();
                 return;
             }
-
             uploader = _this.uploader = WebUploader.create({
                 pick: {
                     id: '#filePickerReady',
