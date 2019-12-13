@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import java.io.Serializable;
-
 @Data
 @Entity(name = "qiao_user")
 public class User implements Serializable {

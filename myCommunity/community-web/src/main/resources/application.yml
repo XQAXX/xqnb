@@ -66,7 +66,44 @@ spring:
   session:
     #选择使用redis 作为session存储
     store-type: none
-
+  #quartz调度器（定时）
+  quartz:
+    #数据库方式
+    job-store-type: jdbc
+    #相关定时属性配置
+    properties:
+      org:
+        quartz:
+          scheduler:
+            #调度标识名 集群中每一个实例都必须使用相同的名称
+            instanceName: inxedu
+            #ID设置为自动获取 每一个必须不同
+            instanceId: AUTO
+          threadPool:
+            #ThreadPool 实现的类名
+            class: org.quartz.simpl.SimpleThreadPool
+            #线程数量
+            threadCount: 10
+            #线程优先级
+            threadPriority: 5
+            #自创建父线程
+            threadsInheritContextClassLoaderOfInitializingThread: true
+          jobStore:
+            #数据保存方式为持久化
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            #容许的最大作业延长时间
+            misfireThreshold: 60000
+            #数据库平台  我这里的是mysql，所以是org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            #表的前缀
+            tablePrefix: qrtz_
+            maxMisfiresToHandleAtATime: 10
+            #加入集群
+            isClustered: true
+            #调度实例失效的检查时间间隔
+            clusterCheckinInterval: 20000
+            #设置为TRUE不会出现序列化非字符串类到 BLOB 时产生的类版本问题
+            useProperties: false
   application:
     name: spirng-boot-mongodb
   data:
