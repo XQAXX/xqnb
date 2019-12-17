@@ -1,13 +1,8 @@
 package com.dream.test;
 
 import com.dream.config.QuartzColonyConfig;
-import org.quartz.impl.triggers.CronTriggerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Service;
-
-import java.text.ParseException;
-
 @Service("QuartzTest")
 public class QuartzTestImpl implements QuartzTest{
     @Autowired

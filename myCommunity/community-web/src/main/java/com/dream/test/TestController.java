@@ -1,25 +1,25 @@
 package com.dream.test;
+import com.dream.common.service.cache.CookieUtils;
 import com.dream.common.service.cache.RedisUtil;
 import com.dream.common.util.ObjectUtils;
-import com.dream.dao.UserDao;
-import com.dream.entity.User;
+import com.dream.common.dao.user.UserDao;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @Controller
 public class TestController {
@@ -30,13 +30,7 @@ public class TestController {
 
     @RequestMapping("/login1")
     public String test() {
-        List<User> all = userDao.findAll();
-        List<User> users = userDao.showUserList();
-        User aa = new User();
-        aa.setUName("ee");
-        //userDao.addUser(aa);
-        userDao.save(aa);
-        redisUtil.set("user", users);
+
         return "log2in";
     }
 
@@ -116,5 +110,17 @@ public class TestController {
 
             return result.toString();
         }
-
+    @ResponseBody
+    @RequestMapping("/set")
+    public String test12(HttpServletResponse response) {
+        CookieUtils.setCookie(response,"test","123",60000);
+        return "123";
+    }
+    @ResponseBody
+    @RequestMapping("/get")
+    public String test13(HttpServletRequest request) {
+        Cookie test = CookieUtils.getCookie(request, "test");
+        test.getValue();
+        return "123";
+    }
 }

@@ -8,6 +8,7 @@ import java.util.Map;
  * @author 乔宏展
  */
 public abstract class BaseController {
+
     /**
      * ajax请求返回结果
      * @param success 请求状态

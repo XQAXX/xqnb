@@ -1,5 +1,6 @@
 package com.dream.upload.config;
 
+import com.dream.common.dao.user.UserDao;
 import io.micrometer.core.instrument.util.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +11,6 @@ import java.io.File;
 
 @Configuration
 public class LocalWebConfig implements WebMvcConfigurer {
-
     @Value("${project.file.root}")
     private String fileRoot;
 
