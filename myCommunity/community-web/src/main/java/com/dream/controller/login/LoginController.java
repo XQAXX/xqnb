@@ -3,7 +3,7 @@ package com.dream.controller.login;
 import com.dream.common.base.BaseController;
 import com.dream.common.util.StringUtils;
 import com.dream.common.service.login.LoginService;
-import com.dream.common.service.user.UserService;
+import com.dream.common.service.shiro.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,8 +44,12 @@ public class LoginController extends BaseController {
             result = this.ajaxResult(false, "密码不能为空", "");
             return result;
         }
-        result = loginService.userLogin(userName, password,response);
-
-        return result;
+        try {
+            result = loginService.userLogin(userName, password,response);
+            return result;
+        }catch (Exception e){
+            e.printStackTrace();
+            return this.ajaxResult(false, "网络繁忙!", "");
+        }
     }
 }

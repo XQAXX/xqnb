@@ -8,6 +8,9 @@ spring:
   #系统缓存
   cache:
     type: redis
+  thymeleaf:
+    cache: false
+    encoding: UTF-8
   #Druid连接池
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
@@ -38,10 +41,6 @@ spring:
       filters: stat,wall,slf4j
       # 通过connectProperties属性来打开mergeSql功能，慢SQL记录
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
   #redis缓存
   redis:
     database: 0
@@ -122,3 +121,19 @@ spring:
     static-path-pattern: /static/**
   resources:
     static-locations: classpath:/templates/,classpath:/static/
+#mybatis 配置
+#mybatis:
+ # mapper-locations: classpath*:com/dream/common/mapper/*/xml/*Mapper.xml
+  #type-aliases-package: com.dream.common.entity.*
+  #config-location: classpath:mybitis-config.xml
+#mybatis-plus 配置
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+      field-strategy: not_empty
+      table-underline: true
+      db-type: mysql
+  mapper-locations: classpath*:com/dream/common/mapper/*/xml/*Mapper.xml
+  type-aliases-package: com.dream.common.entity.*
+  config-location: classpath:mybitis-config.xml

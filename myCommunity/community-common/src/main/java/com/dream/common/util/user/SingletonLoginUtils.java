@@ -1,13 +1,14 @@
 package com.dream.common.util.user;
 
+import com.dream.common.constans.CacheConstans;
 import com.dream.common.constans.UserCacheConstans;
 import com.dream.common.entity.shiro.User;
+import com.dream.common.service.cache.Cache;
 import com.dream.common.service.cache.CookieUtils;
-import com.dream.common.service.cache.RedisUtil;
 import com.dream.common.util.ObjectUtils;
-import com.dream.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -15,20 +16,17 @@ import javax.servlet.http.HttpServletRequest;
  *
  */
 public class SingletonLoginUtils {
-    @Autowired
-	private static RedisUtil redisUtil;
-	
 	/**
 	 * 获取前台登录用户ID
 	 * @param request
 	 * @return 返回用户ID
 	 */
-	public static Integer getLoginUserId(HttpServletRequest request){
+	public static Long getLoginUserId(HttpServletRequest request){
 		User user = getLoginUser(request);
 		if(user!=null){
 			return user.getUserId();
 		}
-		return 0;
+		return 0L;
 	}
 	
 	/**
@@ -37,9 +35,9 @@ public class SingletonLoginUtils {
 	 * @return User
 	 */
 	public static User getLoginUser(HttpServletRequest request){
-		String userKey = String.valueOf(CookieUtils.getCookie(request, UserCacheConstans.USER_LOGIN));
-		if(StringUtils.isNotEmpty(userKey)){
-			User user = (User) redisUtil.get(userKey);
+		Cookie cookie = CookieUtils.getCookie(request, UserCacheConstans.USER_LOGIN);
+		if(ObjectUtils.isNotNull(cookie)){
+			User user = (User)CacheConstans.cache.get(cookie.getValue());
 			if(ObjectUtils.isNotNull(user)){
 				return user;
 			}

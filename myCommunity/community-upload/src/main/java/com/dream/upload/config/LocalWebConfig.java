@@ -1,6 +1,5 @@
 package com.dream.upload.config;
 
-import com.dream.common.dao.user.UserDao;
 import io.micrometer.core.instrument.util.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

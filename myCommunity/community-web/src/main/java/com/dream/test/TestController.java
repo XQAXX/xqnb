@@ -2,7 +2,7 @@ package com.dream.test;
 import com.dream.common.service.cache.CookieUtils;
 import com.dream.common.service.cache.RedisUtil;
 import com.dream.common.util.ObjectUtils;
-import com.dream.common.dao.user.UserDao;
+import com.dream.common.mapper.user.UserMapper;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.PostMethod;
@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
@@ -23,10 +24,10 @@ import java.util.Map;
 
 @Controller
 public class TestController {
-    @Resource
+    @Autowired(required = false)
     private RedisUtil redisUtil;
-    @Autowired
-    private UserDao userDao;
+    @Autowired(required = false)
+    private UserMapper userDao;
 
     @RequestMapping("/login1")
     public String test() {
