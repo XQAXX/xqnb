@@ -8,9 +8,8 @@ import com.dream.common.service.cache.CookieUtils;
 import com.dream.common.service.login.LoginService;
 import com.dream.common.util.ObjectUtils;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.ShiroException;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,7 +53,24 @@ public class LoginServiceImpl implements LoginService {
             result.put("message", "密码错误!");
             result.put("entity", "");
             return result;
-        }
+    }catch (LockedAccountException lock){
+        System.out.println("帐号锁定");
+    }catch (DisabledAccountException disa){
+        System.out.println("用户禁用");
+    }catch (ExcessiveAttemptsException exce){
+        System.out.println("登录重试次数，超限。只允许在一段时间内允许有一定数量的认证尝试");
+    }catch (ConcurrentAccessException  con){
+        System.out.println("一个用户多次登录异常：不允许多次登录，只能登录一次 。即不允许多处登录");
+    }catch (AccountException  acc){
+        System.out.println("账户异常");
+    }catch (ExpiredCredentialsException  expir){
+        System.out.println("过期的凭据异常");
+    }catch (CredentialsException  cre){
+        System.out.println("凭据异常");
+    }catch (ShiroException shiro){
+        shiro.printStackTrace();
+        System.out.println("shiro的全局异常");
+    }
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         Map<String, Object> result = new HashMap<>();
         if (ObjectUtils.isNull(user)) {
@@ -89,10 +105,6 @@ public class LoginServiceImpl implements LoginService {
             CookieUtils.setCookie(response,UserCacheConstans.USER_LOGIN,uuid.toString(),UserCacheConstans.USER_LOGIN_TIME);
             return result;
         }
-/*            result.put("success", true);
-            result.put("message", "登录成功！");
-            result.put("entity", "");*/
-
         return result;
     }
 }

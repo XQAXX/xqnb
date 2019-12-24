@@ -1,6 +1,15 @@
 server:
   port: 80
+  tomcat:
+    uri-encoding: UTF-8
+logging:
+  config: classpath:logback-spring.xml
 spring:
+  http:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
 #配置文件列表
   profiles:
     #添加了这个就可以用application-projrct.yml里面的变量了
@@ -14,7 +23,7 @@ spring:
   #Druid连接池
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
       url: jdbc:mysql://${jdbc.host}/${jdbc.database}?characterEncoding=utf8&allowMultiQueries=true
       username: ${jdbc.user}
@@ -29,7 +38,6 @@ spring:
       timeBetweenEvictionRunsMillis: 100000
       # 配置有一个连接在连接池中的最小生存时间，单位是毫秒
       minEvictableIdleTimeMillis: 300000
-
       validationQuery: SELECT 1 FROM DUAL
       testWhileIdle: true
       testOnBorrow: false

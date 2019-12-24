@@ -49,14 +49,15 @@ public class ShiroConfig {
         return shiroFilterFactoryBean;
     }
     /**
-     * 凭证匹配器
-     * （由于我们的密码校验交给Shiro的SimpleAuthenticationInfo进行处理了
-     * ）
-     * @return
+     * @describe 自定义凭证匹配器
+     *由于我们的密码校验交给Shiro的SimpleAuthenticationInfo进行处理了
+     * （由于我们的密码校验交给Shiro的SimpleAuthenticationInfo进行处理了所以我们需要修改下doGetAuthenticationInfo中的代码）
+     * 可以扩展凭证匹配器，实现输入密码错误次数后锁定等功能
+     * @return org.apache.shiro.authc.credential.HashedCredentialsMatcher
      */
     @Bean
-    public HashedCredentialsMatcher hashedCredentialsMatcher(){
-        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
+    public RetryLimitCredentialsMatcher hashedCredentialsMatcher(){
+        RetryLimitCredentialsMatcher hashedCredentialsMatcher = new RetryLimitCredentialsMatcher();
         //散列算法:这里使用MD5算法;
         hashedCredentialsMatcher.setHashAlgorithmName("md5");
         //散列的次数，比如散列两次，相当于 md5(md5(""));
@@ -75,6 +76,11 @@ public class ShiroConfig {
         securityManager.setRealm(myShiroRealm);
         return securityManager;
     }
+
+    /**
+     * 自定义权限认证
+     * @return
+     */
     @Bean("myShiroRealm")
     public MyShiroRealm myShiroRealm(){
         MyShiroRealm myShiroRealm = new MyShiroRealm();
@@ -88,7 +94,7 @@ public class ShiroConfig {
      * @return
      */
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager){
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(@Qualifier("securityManager")SecurityManager securityManager){
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
@@ -108,7 +114,6 @@ public class ShiroConfig {
         r.setDefaultErrorView("error");
         // Default is "exception"
         r.setExceptionAttribute("exception");
-        //r.setWarnLogCategory("example.MvcLogger");     // No default
         return r;
     }
 

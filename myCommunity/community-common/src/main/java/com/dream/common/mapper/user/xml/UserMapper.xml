@@ -25,7 +25,12 @@
             #{state},
             #{userName}
     </sql>
-<select id="findByName" resultType="user">
+    <!--shiro认证用户是需要的sql-->
+    <select id="findByName" resultType="user">
+     SELECT * FROM USER WHERE USER_NAME = #{username}
+</select>
+    <!--分页测试-->
+    <select id="findAll" resultType="user">
      SELECT * FROM USER
 </select>
 

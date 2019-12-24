@@ -9,9 +9,8 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.util.ByteSource;
-
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -42,9 +41,14 @@ public class MyShiroRealm extends AuthorizingRealm {
         Subject subject= SecurityUtils.getSubject();
         User user=(User)subject.getPrincipal();
         User user1=userService.findById(user.getUserId());
+        //如果用户名不存在
         if(user1==null){
-            //用户名不存在
+
             return null;
+        }
+        //如果账户被禁用则抛出异常
+        if (user1.getState()==2){
+            throw new DisabledAccountException();
         }
         //-------------------开始授权
         List<Permission> permissions =permissionService.getPermissionByUserId(user1.getUserId());
@@ -70,8 +74,8 @@ public class MyShiroRealm extends AuthorizingRealm {
         //1判断用户名
         UsernamePasswordToken usernamePasswordToken=(UsernamePasswordToken)authenticationToken;
         User user=userService.findByName(usernamePasswordToken.getUsername());
+        //用户名不存在
         if(user==null){
-            //用户名不存在
             return null;
         }
 
@@ -88,4 +92,11 @@ public class MyShiroRealm extends AuthorizingRealm {
         //判断密码是否正确
         return authenticationInfo;
     }
+/*    @Override
+    public void clearCachedAuthorizationInfo(PrincipalCollection principals) {
+        SimplePrincipalCollection principals2 = new SimplePrincipalCollection(
+                principals, this.getName());
+        super.clearCachedAuthorizationInfo(principals2);
+    }*/
+
 }

@@ -39,7 +39,6 @@
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-redis:2.2.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.data:spring-data-keyvalue:2.2.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-oxm:5.2.1.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-aop:5.2.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: io.lettuce:lettuce-core:5.2.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-common:4.1.43.Final" level="project" />
     <orderEntry type="library" name="Maven: io.netty:netty-handler:4.1.43.Final" level="project" />
@@ -95,6 +94,9 @@
     <orderEntry type="library" name="Maven: org.springframework.retry:spring-retry:1.2.4.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:5.2.1.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-messaging:5.2.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-aop:2.2.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-aop:5.2.1.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.aspectj:aspectjweaver:1.9.4" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.session:spring-session-data-redis:2.2.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.session:spring-session-core:2.2.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jcl:5.2.1.RELEASE" level="project" />
