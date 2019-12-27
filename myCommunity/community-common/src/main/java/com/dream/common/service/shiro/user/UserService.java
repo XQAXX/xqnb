@@ -9,5 +9,5 @@ import java.util.List;
 public interface UserService {
     User findById(Long uId);
     User findByName(String Username);
-    List<User> findAll( PageEntity page);
+    List<User> queryUser(PageEntity page);
 }

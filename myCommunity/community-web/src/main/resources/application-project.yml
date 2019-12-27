@@ -31,12 +31,6 @@ project:
   contextPath: http://127.0.0.1
   #Tomcat启动端口
   prot: 80
-  #上线时此属性必须为 false，否则影响访问速度
-  development: true
-  #升级系统访问地址
-  updateContextPath: http://127.0.0.1:8089
-  #该用户的唯一标识 用于自动升级
-  token: 234fb637-e5df-4ae6-a31f-3c40211a8ce4
 spring:
   servlet:
     multipart:

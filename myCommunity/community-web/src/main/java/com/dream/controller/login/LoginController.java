@@ -9,6 +9,7 @@ import com.dream.common.service.shiro.user.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.ShiroException;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,10 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "/index")
     public String index() {
         return "index";
+    }
+    @RequestMapping(value = "/index2")
+    public String inde2x() {
+        return "log2in";
     }
     @ResponseBody
     @RequestMapping(value = "/login2", produces = "application/json;charset=utf-8")
@@ -77,6 +82,7 @@ public class LoginController extends BaseController {
         try {
             // 1.获取Subject
             Subject subject = SecurityUtils.getSubject();
+            Object principal = subject.getPrincipal();
             // 2.封装用户数据
             UsernamePasswordToken token = new UsernamePasswordToken(userName, password);
             //设置记住当前用户
@@ -104,6 +110,7 @@ public class LoginController extends BaseController {
             }catch (CredentialsException  cre){
                 return this.ajaxResult(false,"凭据异常!","");
             }catch (ShiroException shiro){
+                shiro.printStackTrace();
                 return this.ajaxResult(false,"shiro的全局异常!","");
             }
         }catch (Exception e){
@@ -111,14 +118,20 @@ public class LoginController extends BaseController {
             return this.ajaxResult(false, "网络繁忙!", "");
         }
     }
-    @ResponseBody
     @RequestMapping(value = "/login3", produces = "application/json;charset=utf-8")
     public String login3(HttpServletRequest request, HttpServletResponse response) {
         // 1.获取Subject
         PageEntity page=new PageEntity();
-        page.setCurrentPage(2);
-        page.setPageSize(1);
-        userService.findAll(page);
-        return "";
+        page.setCurrentPage(1);
+        page.setPageSize(2);
+
+        User user=new User();
+        try {
+            user.selectAll();
+            userService.queryUser(page);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "log2in";
     }
     }

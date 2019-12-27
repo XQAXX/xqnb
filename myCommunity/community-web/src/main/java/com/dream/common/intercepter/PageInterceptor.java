@@ -28,7 +28,7 @@ import java.util.Properties;
  * mybatis分页插件
  */
 
-@Intercepts({    @Signature(
+@Intercepts({@Signature(
         type = Executor.class,
         method = "query",
         args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class}
@@ -44,48 +44,49 @@ public class PageInterceptor implements Interceptor {
         String originalSql = boundSql.getSql().trim();
         Object parameterObject = boundSql.getParameterObject();
         Object obj = boundSql.getParameterObject();
+        PageEntity page=null;
         if(obj instanceof Map) {
             Map<String,Object> result = (Map<String,Object>)obj;
-            PageEntity page = null;
             for (Object arg : result.values()) {
                 if (arg instanceof PageEntity) {
-                	page = (PageEntity) arg;
+                    page = (PageEntity) arg;
                 }
             }
-           //String countfalg = (String)result.get("countfalg");
-            if(ObjectUtils.isNotNull(page)) {
-                String countSql;
-                if (page.isAutomaticCount()){
-                    //自动分页count，根据原sql拼接
-                    countSql = this.getCountSql(originalSql);
-                }else{
-                    //指定count sql
-                    countSql=mappedStatement.getConfiguration().getMappedStatement(mappedStatement.getId()+"Count").getBoundSql(parameter).getSql();
-                }
-                Connection connection = mappedStatement.getConfiguration().getEnvironment().getDataSource().getConnection();
-                PreparedStatement countStmt = connection.prepareStatement(countSql);
-                BoundSql countBS = this.copyFromBoundSql(mappedStatement, boundSql, countSql);
-                DefaultParameterHandler parameterHandler = new DefaultParameterHandler(mappedStatement, parameterObject, countBS);
-                parameterHandler.setParameters(countStmt);
-                ResultSet rs = countStmt.executeQuery();
-                int totpage = 0;
-                if(rs.next()) {
-                    totpage = rs.getInt(1);
-                }
+        }else if(ObjectUtils.isNotNull(obj)) {
+             page = (PageEntity)obj;
+        }
+        if(ObjectUtils.isNotNull(page)) {
+            String countSql;
+            if (page.isAutomaticCount()){
+                //自动分页count，根据原sql拼接
+                countSql = this.getCountSql(originalSql);
+            }else{
+                //指定count sql
+                countSql=mappedStatement.getConfiguration().getMappedStatement(mappedStatement.getId()+"Count").getBoundSql(parameter).getSql();
+            }
+            Connection connection = mappedStatement.getConfiguration().getEnvironment().getDataSource().getConnection();
+            PreparedStatement countStmt = connection.prepareStatement(countSql);
+            BoundSql countBS = this.copyFromBoundSql(mappedStatement, boundSql, countSql);
+            DefaultParameterHandler parameterHandler = new DefaultParameterHandler(mappedStatement, parameterObject, countBS);
+            parameterHandler.setParameters(countStmt);
+            ResultSet rs = countStmt.executeQuery();
+            int totpage = 0;
+            if(rs.next()) {
+                totpage = rs.getInt(1);
+            }
 
-                rs.close();
-                countStmt.close();
-                connection.close();
-                page.setTotalResultSize(totpage);
-                int totalPageSize = (page.getTotalResultSize() - 1) / page.getPageSize() + 1;
-                page.setTotalPageSize(totalPageSize);
-                int offset = (page.getCurrentPage() - 1) * page.getPageSize();
-                StringBuffer sb = new StringBuffer();
-                sb.append(originalSql).append(" limit ").append(offset).append(",").append(page.getPageSize());
-                BoundSql newBoundSql = this.copyFromBoundSql(mappedStatement, boundSql, sb.toString());
-                MappedStatement newMs = this.copyFromMappedStatement(mappedStatement, new PageInterceptor.BoundSqlSqlSource(newBoundSql));
-                invocation.getArgs()[0] = newMs;
-            }
+            rs.close();
+            countStmt.close();
+            connection.close();
+            page.setTotalResultSize(totpage);
+            int totalPageSize = (page.getTotalResultSize() - 1) / page.getPageSize() + 1;
+            page.setTotalPageSize(totalPageSize);
+            int offset = (page.getCurrentPage() - 1) * page.getPageSize();
+            StringBuffer sb = new StringBuffer();
+            sb.append(originalSql).append(" limit ").append(offset).append(",").append(page.getPageSize());
+            BoundSql newBoundSql = this.copyFromBoundSql(mappedStatement, boundSql, sb.toString());
+            MappedStatement newMs = this.copyFromMappedStatement(mappedStatement, new PageInterceptor.BoundSqlSqlSource(newBoundSql));
+            invocation.getArgs()[0] = newMs;
         }
 
         Object result1 = invocation.proceed();

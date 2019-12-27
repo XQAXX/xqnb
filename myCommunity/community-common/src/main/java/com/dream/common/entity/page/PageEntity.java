@@ -6,19 +6,26 @@ import java.util.List;
 
 /**
  * 分页实体类
- * @author 小乔
+ * @author 神秘人
  */
 public class PageEntity implements Serializable{
 	private static final long serialVersionUID = 1L;
-	
-	private int currentPage=1;//当前页
-	private int pageSize=10;//页面显示记录数
-	private int totalResultSize;//总记录数
-	private int totalPageSize;//总页数
-	private boolean first = false;//是否是首页
-	private boolean last = false;//是否是尾页
-	private boolean automaticCount = true;//是否采用自动分页
-	private List datas;//用于翻页传值
+	//当前页
+	private int currentPage=1;
+	//页面显示记录数
+	private int pageSize=10;
+	//总记录数
+	private int totalResultSize;
+	//总页数
+	private int totalPageSize;
+	//是否是首页
+	private boolean first = false;
+	//是否是尾页
+	private boolean last = false;
+	//是否采用自动分页
+	private boolean automaticCount = true;
+	//用于翻页传值
+	private List datas;
 
 	public int getCurrentPage() {
 		return currentPage;

@@ -1,6 +1,4 @@
 package com.dream.config;
-
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -9,45 +7,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
+
+import javax.servlet.Filter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
 @Configuration
 public class ShiroConfig {
-    /**
-     * Shiro的过滤器链
-     */
-    @Bean
-    public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("securityManager") SecurityManager securityManager) {
-        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
-        //设置安全管理器
-        shiroFilterFactoryBean.setSecurityManager(securityManager);
-        //添加Shiro拦截器
-        /**
-         * Shiro 内置过滤器，可以实现权限相关的拦截器
-         *     anon:无需认证（登录）可以直接访问
-         *     authc:必须认证才能访问
-         *     user:如果使用rememberMe的功能才可以访问
-         *     perms:该资源得到资源权限才可以访问
-         *     role:该资源必须得到角色权限才可以访问
-         */
-        Map<String, String> filterMap = new LinkedHashMap<>();
-        filterMap.put("/login", "anon");
-        filterMap.put("/aaa", "anon");
-        //添加Shiro授权拦截器
-        filterMap.put("/add", "perms[添加]");
-        filterMap.put("/foresee", "perms[预言未来]");
-        filterMap.put("/update", "perms[修改]");
-        filterMap.put("/delete", "perms[删除]");
-        filterMap.put("/*", "authc");
-        // 没有登陆的用户只能访问登陆页面
-        shiroFilterFactoryBean.setLoginUrl("/index");
-        //设置未授权的页面
-        shiroFilterFactoryBean.setUnauthorizedUrl("/unAuth");
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
-        return shiroFilterFactoryBean;
-    }
+
     /**
      * @describe 自定义凭证匹配器
      *由于我们的密码校验交给Shiro的SimpleAuthenticationInfo进行处理了
@@ -67,16 +35,6 @@ public class ShiroConfig {
         return hashedCredentialsMatcher;
     }
 
-
-
-
-    @Bean("securityManager")
-    public SecurityManager securityManager(@Qualifier("myShiroRealm") MyShiroRealm myShiroRealm){
-        DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
-        securityManager.setRealm(myShiroRealm);
-        return securityManager;
-    }
-
     /**
      * 自定义权限认证
      * @return
@@ -87,16 +45,22 @@ public class ShiroConfig {
         myShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         return myShiroRealm;
     }
+    @Bean("securityManager")
+    public SecurityManager securityManager(){
+        DefaultWebSecurityManager securityManager =  new DefaultWebSecurityManager();
+        securityManager.setRealm(myShiroRealm());
+        return securityManager;
+    }
+
     /**
      *  开启shiro aop注解支持.
      *  使用代理方式;所以需要开启代码支持;
-     * @param securityManager
      * @return
      */
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(@Qualifier("securityManager")SecurityManager securityManager){
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(){
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
-        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager());
         return authorizationAttributeSourceAdvisor;
     }
 
@@ -116,5 +80,46 @@ public class ShiroConfig {
         r.setExceptionAttribute("exception");
         return r;
     }
-
+    /**
+     * Shiro的过滤器链
+     */
+    @Bean
+    public ShiroFilterFactoryBean getShiroFilterFactoryBean(@Qualifier("securityManager") SecurityManager securityManager) {
+        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+        //设置安全管理器
+        shiroFilterFactoryBean.setSecurityManager(securityManager);
+        // 没有登陆的用户只能访问登陆页面
+        shiroFilterFactoryBean.setLoginUrl("/index");
+        //设置未授权的页面
+        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+        //添加Shiro拦截器
+        /**
+         * Shiro 内置过滤器，可以实现权限相关的拦截器
+         *     anon:无需认证（登录）可以直接访问
+         *     authc:必须认证才能访问
+         *     user:如果使用rememberMe的功能才可以访问
+         *     perms:该资源得到资源权限才可以访问
+         *     role:该资源必须得到角色权限才可以访问画布
+         */
+        Map<String, String> filterMap = new LinkedHashMap<>();
+        filterMap.put("/login3", "anon");
+        filterMap.put("/login", "anon");
+        //百度编辑器
+        filterMap.put("/static/**", "anon");
+        filterMap.put("/file/**", "anon");
+        filterMap.put("/ueditor/**","anon");
+        filterMap.put("/favicon.ico", "anon");
+        filterMap.put("/upload/**", "anon");
+        filterMap.put("/qiao/**", "anon");
+        filterMap.put("/index", "anon");
+        //添加Shiro授权拦截器
+        filterMap.put("/add", "perms[添加]");
+        filterMap.put("/foresee", "perms[预言未来]");
+        filterMap.put("/update", "perms[修改]");
+        filterMap.put("/delete", "perms[删除]");
+        //对所有用户认证
+        filterMap.put("/**","authc");
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
+        return shiroFilterFactoryBean;
+    }
 }

@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> findAll(PageEntity page) {
-        return userMapper.findAll(page);
+    public List<User> queryUser(PageEntity page) {
+        return userMapper.queryUser(page);
     }
 }

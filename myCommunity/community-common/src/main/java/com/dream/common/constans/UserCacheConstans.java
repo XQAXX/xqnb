@@ -1,6 +1,6 @@
 package com.dream.common.constans;
 /**
- * @author 小乔
+ * @author 神秘人
  */
 public class UserCacheConstans {
     /**保存redis缓存用户的key的开头*/

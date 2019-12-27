@@ -23,6 +23,48 @@ public class MyShiroRealm extends AuthorizingRealm {
     private UserService userService;
     @Resource
     private PermissionService permissionService;
+
+    /**
+     * 执行认证逻辑
+     * @param authenticationToken
+     * @return
+     * @throws AuthenticationException
+     */
+    @Override
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+        System.out.println("执行认证逻辑");
+        /**
+         * 判断ShiroRealm逻辑UsernamePasswordToken是否正确
+         */
+        //1判断用户名
+        UsernamePasswordToken usernamePasswordToken=(UsernamePasswordToken)authenticationToken;
+        User user= null;
+        try {
+            user = userService.findByName(usernamePasswordToken.getUsername());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //用户名不存在
+        if(user==null){
+            return null;
+        }
+        //如果账户被禁用则抛出异常
+        if (user.getState()==2){
+            throw new DisabledAccountException();
+        }
+        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
+                //这里传入的是user对象，比对的是用户名，直接传入用户名也没错，但是在授权部分就需要自己重新从数据库里取权限
+                user,
+                //密码
+                user.getPassword(),
+                //salt=username+salt
+                //ByteSource.Util.bytes(user.getCredentialsSalt()),
+                //realm name
+                getName()
+        );
+        //判断密码是否正确
+        return authenticationInfo;
+    }
     /**
      * 执行授权逻辑
      * @param principalCollection
@@ -46,10 +88,6 @@ public class MyShiroRealm extends AuthorizingRealm {
 
             return null;
         }
-        //如果账户被禁用则抛出异常
-        if (user1.getState()==2){
-            throw new DisabledAccountException();
-        }
         //-------------------开始授权
         List<Permission> permissions =permissionService.getPermissionByUserId(user1.getUserId());
         for (Permission per : permissions) {
@@ -58,45 +96,4 @@ public class MyShiroRealm extends AuthorizingRealm {
         }
         return simpleAuthorizationInfo;
     }
-
-    /**
-     * 执行认证逻辑
-     * @param authenticationToken
-     * @return
-     * @throws AuthenticationException
-     */
-    @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        System.out.println("执行认证逻辑");
-        /**
-         * 判断ShiroRealm逻辑UsernamePasswordToken是否正确
-         */
-        //1判断用户名
-        UsernamePasswordToken usernamePasswordToken=(UsernamePasswordToken)authenticationToken;
-        User user=userService.findByName(usernamePasswordToken.getUsername());
-        //用户名不存在
-        if(user==null){
-            return null;
-        }
-
-        SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-                //这里传入的是user对象，比对的是用户名，直接传入用户名也没错，但是在授权部分就需要自己重新从数据库里取权限
-                user,
-                //密码
-                user.getPassword(),
-                //salt=username+salt
-                //ByteSource.Util.bytes(user.getCredentialsSalt()),
-                //realm name
-                getName()
-        );
-        //判断密码是否正确
-        return authenticationInfo;
-    }
-/*    @Override
-    public void clearCachedAuthorizationInfo(PrincipalCollection principals) {
-        SimplePrincipalCollection principals2 = new SimplePrincipalCollection(
-                principals, this.getName());
-        super.clearCachedAuthorizationInfo(principals2);
-    }*/
-
 }

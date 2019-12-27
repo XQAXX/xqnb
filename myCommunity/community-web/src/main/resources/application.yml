@@ -1,9 +1,13 @@
 server:
-  port: 80
+  port: ${project.prot}
   tomcat:
     uri-encoding: UTF-8
 logging:
   config: classpath:logback-spring.xml
+  level:
+    dao: debug
+    org:
+      mybatis: debug
 spring:
   http:
     encoding:
@@ -129,11 +133,6 @@ spring:
     static-path-pattern: /static/**
   resources:
     static-locations: classpath:/templates/,classpath:/static/
-#mybatis 配置
-#mybatis:
- # mapper-locations: classpath*:com/dream/common/mapper/*/xml/*Mapper.xml
-  #type-aliases-package: com.dream.common.entity.*
-  #config-location: classpath:mybitis-config.xml
 #mybatis-plus 配置
 mybatis-plus:
   global-config:

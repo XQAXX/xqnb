@@ -24,5 +24,5 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     User findByName(@Param("userName") String userName);
-    List<User> findAll(@Param("page") PageEntity page);
+    List<User> queryUser(PageEntity page);
 }
