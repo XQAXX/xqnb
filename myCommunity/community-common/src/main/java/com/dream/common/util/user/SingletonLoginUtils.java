@@ -3,10 +3,8 @@ package com.dream.common.util.user;
 import com.dream.common.constans.CacheConstans;
 import com.dream.common.constans.UserCacheConstans;
 import com.dream.common.entity.shiro.User;
-import com.dream.common.service.cache.Cache;
 import com.dream.common.service.cache.CookieUtils;
 import com.dream.common.util.ObjectUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

@@ -1,4 +1,5 @@
 package com.dream.common.entity.shiro;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import java.io.Serializable;
@@ -18,10 +19,11 @@ public class Role extends Model<Role> implements Serializable {
     /**是否可用,如果不可用将不会添加给用户*/
     private Boolean available = Boolean.TRUE;
     /**角色 -- 权限关系：多对多关系;*/
-   private List<Permission> permissions;
-
+    @TableField(exist = false)
+    private List<Permission> permissions;
     /**用户 - 角色关系定义;*/
     /**一个角色对应多个用户*/
+    @TableField(exist = false)
     private List<User> users;
 
     @Override

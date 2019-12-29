@@ -1,5 +1,6 @@
 package com.dream.config;
 import com.dream.common.entity.shiro.Permission;
+import com.dream.common.entity.shiro.Role;
 import com.dream.common.entity.shiro.User;
 import com.dream.common.service.shiro.permission.PermissionService;
 import com.dream.common.service.shiro.user.UserService;
@@ -9,7 +10,6 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import javax.annotation.Resource;
 import java.util.List;
@@ -88,6 +88,9 @@ public class MyShiroRealm extends AuthorizingRealm {
 
             return null;
         }
+ /*       List<Role> roleList = user1.getRoleList();
+        for ()
+        simpleAuthorizationInfo.addRoles(roleList);*/
         //-------------------开始授权
         List<Permission> permissions =permissionService.getPermissionByUserId(user1.getUserId());
         for (Permission per : permissions) {

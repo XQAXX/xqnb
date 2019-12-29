@@ -2,7 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dream.common.mapper.user.UserMapper">
+   <resultMap id="userMap" type="User">
+       <result column="user_id" property="userId" />
+       <result column="create_time" property="createTime" />
+       <result column="email" property="email" />
+       <result column="expired_date" property="expiredDate" />
+       <result column="name" property="name" />
+       <result column="password" property="password" />
+       <result column="salt" property="salt" />
+       <result column="state" property="state" />
+       <result column="user_name" property="userName" />
+       <collection property="roleList" ofType="Role" >
+           <result column="role_id" property="roleId" />
+           <result column="available" property="available" />
+           <result column="description" property="description" />
+           <result column="role" property="role" />
+       <collection property="permissions" ofType="Permission" >
+           <result column="permission_id" property="permissionId" />
+           <result column="available" property="available" />
+           <result column="parent_id" property="parentId" />
+           <result column="parent_ids" property="parentIds" />
+           <result column="permission" property="permission" />
+           <result column="permission_name" property="permissionName" />
+           <result column="resource_type" property="resourceType" />
+           <result column="url" property="url" />
+       </collection>
+       </collection>
+   </resultMap>
+    <resultMap id="userDtoMap" type="UserDto" extends="userMap">
 
+    </resultMap>
     <sql id="user_column">
         user.user_id,
         user.create_time,
@@ -27,7 +56,14 @@
     </sql>
     <!--shiro认证用户是需要的sql-->
     <select id="findByName" resultType="user">
-     SELECT * FROM USER WHERE USER_NAME = #{username}
+     SELECT * FROM user WHERE user_name = #{username}
+    </select>
+    <!--根据用户的id查询-->
+    <select id="findById" parameterType="long" resultMap="userDtoMap">
+     SELECT * FROM user
+     LEFT JOIN role ON  role.role_id IN (SELECT role_id FROM user_role WHERE user_role.user_id= user.user_id)
+     LEFT JOIN permission ON permission.permission_id IN (SELECT permission_id FROM role_permission WHERE role_permission.role_id = role.role_id)
+     WHERE user_id = #{userId}
 </select>
     <!--分页测试-->
     <select id="queryUser" parameterType="java.util.Map"  resultType="user">

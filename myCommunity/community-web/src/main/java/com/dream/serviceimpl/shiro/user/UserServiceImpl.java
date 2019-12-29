@@ -1,5 +1,6 @@
 package com.dream.serviceimpl.shiro.user;
 import com.dream.common.entity.page.PageEntity;
+import com.dream.common.entity.shiro.UserDto;
 import com.dream.common.mapper.user.UserMapper;
 import com.dream.common.entity.shiro.User;
 import com.dream.common.service.shiro.user.UserService;
@@ -12,11 +13,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService{
     @Autowired
     private UserMapper userMapper;
-    @Override
-    public User findById(Long uId) {
 
-        return null;
-    }
 
     @Override
     public User findByName(String username) {
@@ -27,5 +24,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<User> queryUser(PageEntity page) {
         return userMapper.queryUser(page);
+    }
+
+    @Override
+    public UserDto findById(Long userId) {
+        return userMapper.findById(userId);
     }
 }

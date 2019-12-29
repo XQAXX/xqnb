@@ -52,7 +52,7 @@ public class PageInterceptor implements Interceptor {
                     page = (PageEntity) arg;
                 }
             }
-        }else if(ObjectUtils.isNotNull(obj)) {
+        }else if(obj instanceof PageEntity) {
              page = (PageEntity)obj;
         }
         if(ObjectUtils.isNotNull(page)) {

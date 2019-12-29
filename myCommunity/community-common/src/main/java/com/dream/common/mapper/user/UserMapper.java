@@ -2,6 +2,7 @@ package com.dream.common.mapper.user;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.dream.common.entity.page.PageEntity;
 import com.dream.common.entity.shiro.User;
+import com.dream.common.entity.shiro.UserDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
@@ -24,5 +25,11 @@ public interface UserMapper extends BaseMapper<User> {
      * @return
      */
     User findByName(@Param("userName") String userName);
+    /**
+     * 根据账号id查询用户
+     * @param userId
+     * @return
+     */
+    UserDto findById(@Param("userId") Long userId);
     List<User> queryUser(PageEntity page);
 }

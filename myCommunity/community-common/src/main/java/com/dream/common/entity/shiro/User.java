@@ -1,13 +1,10 @@
 package com.dream.common.entity.shiro;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
-import com.dream.common.entity.shiro.Role;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 import java.sql.Date;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 @Data
 public class User extends Model<User> implements Serializable {

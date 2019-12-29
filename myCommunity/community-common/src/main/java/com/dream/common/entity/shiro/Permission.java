@@ -1,4 +1,5 @@
 package com.dream.common.entity.shiro;
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 import java.io.Serializable;
 import java.util.List;
@@ -21,6 +22,7 @@ public class Permission implements Serializable {
     private String parentIds;
     private Boolean available = Boolean.TRUE;
     /**角色 -- 权限关系：多对多关系;*/
+    @TableField(exist = false)
     private List<Role> roles;
 
 }
